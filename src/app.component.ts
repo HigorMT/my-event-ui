@@ -1,10 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { LayoutComponent } from './app/template/layout.component';
 
 @Component({
-    selector: 'app-root',
-    standalone: true,
-    imports: [RouterModule],
-    template: `<router-outlet></router-outlet>`
+  selector: 'app-root',
+  standalone: true,
+  imports: [CommonModule, RouterOutlet, LayoutComponent],
+  template: `
+    <app-layout>
+      <router-outlet></router-outlet>
+    </app-layout>
+  `,
+  styleUrls: []
 })
-export class AppComponent {}
+export class AppComponent {
+  title = 'Sistema de Eventos';
+}
+

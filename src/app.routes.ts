@@ -1,23 +1,42 @@
 import { Routes } from '@angular/router';
-import { AppLayout } from './app/layout/component/app.layout';
-import { Dashboard } from './app/pages/dashboard/dashboard';
-import { Documentation } from './app/pages/documentation/documentation';
-import { Landing } from './app/pages/landing/landing';
-import { Notfound } from './app/pages/notfound/notfound';
 
-export const appRoutes: Routes = [
-    {
-        path: '',
-        component: AppLayout,
-        children: [
-            { path: '', component: Dashboard },
-            { path: 'uikit', loadChildren: () => import('./app/pages/uikit/uikit.routes') },
-            { path: 'documentation', component: Documentation },
-            { path: 'pages', loadChildren: () => import('./app/pages/pages.routes') }
-        ]
-    },
-    { path: 'landing', component: Landing },
-    { path: 'notfound', component: Notfound },
-    { path: 'auth', loadChildren: () => import('./app/pages/auth/auth.routes') },
-    { path: '**', redirectTo: '/notfound' }
+export const routes: Routes = [
+  {
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./app/template/dashboard.component').then(m => m.DashboardComponent)
+  },
+  {
+    path: 'eventos',
+    loadComponent: () => import('./app/template/event-list.component').then(m => m.EventListComponent)
+  },
+  {
+    path: 'eventos/novo',
+    loadComponent: () => import('./app/template/event-form.component').then(m => m.EventFormComponent)
+  },
+  {
+    path: 'eventos/:id',
+    loadComponent: () => import('./app/template/event-detail.component').then(m => m.EventDetailComponent)
+  },
+  {
+    path: 'participantes',
+    loadComponent: () => import('./app/template/participants.component').then(m => m.ParticipantsComponent)
+  },
+  {
+    path: 'relatorios',
+    loadComponent: () => import('./app/template/reports.component').then(m => m.ReportsComponent)
+  },
+  {
+    path: 'configuracoes',
+    loadComponent: () => import('./app/template/settings.component').then(m => m.SettingsComponent)
+  },
+  {
+    path: '**',
+    redirectTo: '/dashboard'
+  }
 ];
+
