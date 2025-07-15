@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { RegistroUsuarioComponent } from './app/template/registro-usuario/registro-usuario.component';
 
 export const routes: Routes = [
     {
@@ -12,7 +13,7 @@ export const routes: Routes = [
     },
     {
         path: 'cadastro',
-        loadComponent: () => import('./app/template/login/register.component').then(m => m.RegisterComponent)
+        loadComponent: () => import('./app/template/registro-usuario/registro-usuario.component').then(m => m.RegistroUsuarioComponent)
     },
     {
         path: 'dashboard',

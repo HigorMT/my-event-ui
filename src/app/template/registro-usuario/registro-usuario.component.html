@@ -1,0 +1,170 @@
+<animated-background></animated-background>
+
+<div class="register-container">
+    <button
+        type="button"
+        (click)="toggleTheme()"
+        class="theme-toggle">
+        <i [class]="themeService.isDarkMode() ? 'pi pi-sun' : 'pi pi-moon'"></i>
+    </button>
+
+    <div class="register-card">
+        <div class="register-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="pi pi-user-plus"></i>
+                </div>
+                <h1>Criar Conta</h1>
+            </div>
+            <p class="subtitle">Junte-se ao Sistema de Eventos</p>
+        </div>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+            <div class="form-group">
+                <label for="name">Nome completo</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-user input-icon"></i>
+                    <input placeholder="Digite seu nome completo"
+                           [class.error]="nameError"
+                           formControlName="name"
+                           class="form-input"
+                           type="text"
+                           pInputText
+                           id="name">
+                </div>
+                <div *ngIf="nameError" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <span *ngIf="registerForm.get('name')?.errors?.['required']">Nome é obrigatório</span>
+                    <span
+                        *ngIf="registerForm.get('name')?.errors?.['minlength']">Nome deve ter pelo menos 2 caracteres</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-envelope input-icon"></i>
+                    <input placeholder="Digite seu e-mail"
+                           [class.error]="emailError"
+                           formControlName="email"
+                           class="form-input"
+                           type="email"
+                           pInputText
+                           id="email">
+                </div>
+                <div *ngIf="emailError"
+                     class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <span *ngIf="registerForm.get('email')?.errors?.['required']">E-mail é obrigatório</span>
+                    <span *ngIf="registerForm.get('email')?.errors?.['email']">E-mail inválido</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthDate">Data de nascimento</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-calendar input-icon"></i>
+                    <p-calendar placeholder="Selecione sua data de nascimento"
+                                [class.error]="birthDateError"
+                                [style]="{'width': '100%'}"
+                                formControlName="birthDate"
+                                class="form-input-calendar"
+                                [yearRange]="yearRange"
+                                dateFormat="dd/mm/yy"
+                                [maxDate]="maxDate"
+                                id="birthDate">
+                    </p-calendar>
+                </div>
+                <div *ngIf="birthDateError" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    Data de nascimento é obrigatória
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-lock input-icon"></i>
+                    <p-password placeholder="Digite sua senha"
+                                promptLabel="Digite uma senha"
+                                [class.error]="passwordError"
+                                class="form-input-password"
+                                formControlName="password"
+                                [toggleMask]="false"
+                                mediumLabel="Média"
+                                strongLabel="Forte"
+                                [feedback]="true"
+                                weakLabel="Fraca"
+                                id="password">
+                    </p-password>
+                </div>
+                <div *ngIf="passwordError" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <span *ngIf="registerForm.get('password')?.errors?.['minlength']">Senha deve ter pelo menos 6 caracteres</span>
+                    <span *ngIf="registerForm.get('password')?.errors?.['required']">Senha é obrigatória</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar senha</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-lock input-icon"></i>
+                    <p-password [class.error]="confirmPasswordError"
+                                formControlName="confirmPassword"
+                                placeholder="Confirme sua senha"
+                                class="form-input-password"
+                                id="confirmPassword"
+                                [toggleMask]="false"
+                                [feedback]="false">
+                    </p-password>
+                </div>
+                <div *ngIf="confirmPasswordError" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    <span *ngIf="registerForm.get('confirmPassword')?.errors?.['required']">Confirmação de senha é obrigatória</span>
+                    <span *ngIf="registerForm.errors?.['passwordMismatch']">As senhas não coincidem</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-wrapper">
+                    <p-checkbox formControlName="acceptTerms" binary="true" inputId="acceptTerms">
+                    </p-checkbox>
+                    <label for="acceptTerms">
+                        Eu aceito os <a href="#" class="link">Termos de Uso</a> e a <a href="#" class="link">Política de
+                        Privacidade</a>
+                    </label>
+                </div>
+                <div *ngIf="acceptTherms" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    Você deve aceitar os termos e condições
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="checkbox-wrapper">
+                    <p-checkbox formControlName="newsletter" binary="true" inputId="newsletter"/>
+                    <label for="newsletter">
+                        Quero receber novidades e promoções por e-mail
+                    </label>
+                </div>
+            </div>
+
+            <p-button [disabled]="registerForm.invalid"
+                      class="register-button"
+                      icon="pi pi-user-plus"
+                      [loading]="isLoading"
+                      label="Criar Conta"
+                      type="submit">
+            </p-button>
+        </form>
+
+        <div class="login-link">
+            <span>Já tem uma conta? </span>
+            <a routerLink="/login" class="login-button">Fazer login</a>
+        </div>
+    </div>
+
+    <div class="register-footer">
+        <p>&copy; 2025 M-Code. Todos os direitos reservados.</p>
+    </div>
+</div>

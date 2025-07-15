@@ -1,0 +1,102 @@
+<animated-background></animated-background>
+
+<div class="login-container">
+    <button
+        type="button"
+        (click)="toggleTheme()"
+        class="theme-toggle">
+        <i [class]="themeService.isDarkMode() ? 'pi pi-sun' : 'pi pi-moon'"></i>
+    </button>
+
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="pi pi-calendar"></i>
+                </div>
+                <h1>Sistema de Eventos</h1>
+            </div>
+            <p class="subtitle">Faça login para acessar sua conta</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+            <div class="form-group">
+                <label for="username">Nome de usuário</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-user input-icon"></i>
+                    <input placeholder="Digite seu nome de usuário"
+                        [class.error]="usernameError"
+                        formControlName="username"
+                        class="form-input"
+                        id="username"
+                        pInputText
+                        type="text" >
+                </div>
+                <div *ngIf="usernameError" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    Nome de usuário é obrigatório
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-wrapper">
+                    <i class="pi pi-lock input-icon"></i>
+                    <p-password placeholder="Digite sua senha"
+                                [class.error]="passwordError"
+                                class="form-input-password"
+                                formControlName="password"
+                                [toggleMask]="false"
+                                [feedback]="false"
+                                id="password">
+                    </p-password>
+                </div>
+                <div *ngIf="passwordError" class="error-message">
+                    <i class="pi pi-exclamation-triangle"></i>
+                    Senha é obrigatória
+                </div>
+            </div>
+
+            <div class="form-options">
+                <div class="checkbox-wrapper">
+                    <p-checkbox
+                        formControlName="rememberMe"
+                        binary="true"
+                        inputId="rememberMe">
+                    </p-checkbox>
+                    <label for="rememberMe">Lembrar de mim</label>
+                </div>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </div>
+
+            <p-button [disabled]="loginForm.invalid"
+                      [loading]="isLoading"
+                      class="login-button"
+                      icon="pi pi-sign-in"
+                      label="Entrar"
+                      type="submit">
+            </p-button>
+        </form>
+
+        <div class="divider">
+            <span>ou</span>
+        </div>
+
+        <div class="social-login">
+            <p-button (onClick)="loginWithGoogle()"
+                      label="Continuar com Google"
+                      class="social-button google"
+                      icon="pi pi-google">
+            </p-button>
+        </div>
+
+        <div class="signup-link">
+            <span>Não tem uma conta? </span>
+            <a routerLink="/cadastro" class="signup-button">Criar conta</a>
+        </div>
+    </div>
+
+    <div class="login-footer">
+        <p>&copy; 2025 M-Code. Todos os direitos reservados.</p>
+    </div>
+</div>
